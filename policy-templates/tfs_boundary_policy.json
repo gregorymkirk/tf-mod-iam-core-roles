@@ -1,0 +1,56 @@
+{
+    "Version": "2012-10-17",
+    "Statement":[
+        {
+            "Effect":"Deny",
+            "Action":[
+                "iam:DeletePolicy",
+                "iam:DeletePolicyVersion",
+                "iam:CreatePolicyVersion"
+            ],
+            "Resource":"arn:aws:iam::${acct_num}:policy/tfs_boundary"
+        },
+        {
+            "Effect":"Deny",
+            "Action":[
+                "iam:DeleteRolePermissionsBoundary",
+                "iam:DeleteUserPermissionsBoundary"
+            ],
+            "Resource":"*"
+        },        
+        {
+            "Effect":"Deny",
+            "Action": [
+                "iam:CreateRole",
+                "iam:PutRolePermissionsBoundary"
+            ],
+            "Resource":"*",
+            "Condition": {
+                 "StringNotEquals": {
+                 "iam:PermissionsBoundary": "arn:aws:iam::${acct_num}:policy/tfs_boundary"
+                }
+            }                    
+        },
+        {
+            "Effect":"Deny",
+            "Action":[
+                "iam:*User",
+                "iam:*Group"
+            ],
+            "Resource": "*"
+        },        
+        {
+            "Effect":"Allow",
+            "Action":"*",
+            "Resource":"*",
+            "Condition":{
+                "StringEquals":{
+                    "aws:RequestedRegion":[
+                        "us-east-1",
+                        "us-west-2"
+                    ]
+                }
+            }
+        }
+    ]
+}

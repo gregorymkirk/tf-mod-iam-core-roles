@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "ec2:*",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "ec2:DeleteSubnet",
+                "ec2:CreateSubnet",
+                "ec2:DeleteVpc",
+                "ec2:CreateVpc"
+            ],
+            "Resource": "*"            
+        }        
+    ]
+}
