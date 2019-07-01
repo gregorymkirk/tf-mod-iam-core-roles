@@ -1,5 +1,6 @@
 variable "master_account" {
-  description = "Accont number of master account"
+  description = "Account number of master account"
+  default     = ""
 }
 
 variable "environment" {
