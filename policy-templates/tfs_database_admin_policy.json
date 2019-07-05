@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "rds:*",
+        "redshift:*",
+        "dynamodb:*",
+        "iam:GetRole",
+        "iam:PassRole",
+        "s3:*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+          "lambda:GetFunction",
+          "sdb:GetAttributes"
+      ],
+      "Resource": "*",
+      "Effect": "Deny"
+    }
+
+  ]
+}

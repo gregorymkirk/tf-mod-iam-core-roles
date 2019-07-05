@@ -1,0 +1,56 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateInstanceProfile",
+        "ec2:*Tags",
+        "iam:TagRole",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:CreateRole",
+        "iam:AttachRolePolicy",
+        "iam:PutRolePolicy",
+        "autoscaling:*",
+        "iam:AddRoleToInstanceProfile",
+        "ec2:*Snapshot*",
+        "ec2:*Volume*",
+        "iam:PassRole",
+        "iam:Get*",
+        "iam:DetachRolePolicy",
+        "ec2:*Image*",
+        "iam:CreatePolicyVersion",
+        "ec2:*IamInstanceProfile*",
+        "iam:DeleteInstanceProfile",
+        "iam:ListRoles",
+        "iam:DeleteRole",
+        "iam:CreatePolicy",
+        "ssm:*",
+        "ec2:*Instance*",
+        "iam:UpdateRole",
+        "ec2:*LaunchTemplate*",
+        "eks:*",
+        "ec2:*SecurityGroup*"
+      ],
+      "Resource": "*"
+    },
+    
+    {
+      "Effect": "Deny",
+      "Action": [
+        "lambda:GetFunction",
+        "athena:GetQueryResults",
+        "s3:getObject",
+        "s3:GetObjectTorrent",
+        "sdb:GetAttributes",
+        "dynamodb:BatchGet*",
+        "dynamodb:Get*",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": "*"
+    }
+
+  ]
+}

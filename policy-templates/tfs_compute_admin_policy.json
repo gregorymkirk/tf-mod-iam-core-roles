@@ -1,0 +1,49 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "cloudwatch:*",
+        "s3:*",
+        "sns:*",
+        "ssm:*",
+        "config:*",
+        "autoscaling:*",
+        "datapipeline:*",
+        "elasticbeanstalk:*",
+        "health:*",
+        "lambda:*",
+        "aws-marketplace:*",
+        "iam:GetRole",
+        "iam:PassRole",
+        "tag:*",
+        "servicecatalog:*",
+        "states:*",
+        "trustedadvisor:*",
+        "xray:*",
+        "route53:*",
+        "ec2:*Instance*",
+        "ec2:*Volume*",
+        "ec2:*Snapshot*",
+        "ec2:*Image*",
+        "ec2:*Tags",
+        "ec2:*IamInstanceProfile*",
+        "ec2:*LaunchTemplate*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    },
+            {
+            "Effect": "Deny",
+            "Action": [
+                "athena:GetQueryResults",
+                "sdb:GetAttributes",
+                "dynamodb:BatchGet*",
+                "dynamodb:Get*",
+                "dynamodb:Query",
+                "dynamodb:Scan"
+            ],
+            "Resource": "*"
+        }
+  ]
+}
