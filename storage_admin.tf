@@ -5,16 +5,20 @@ resource "aws_iam_role" "storage_admin" {
   path                 = "/core/"
 }
 
-resource "aws_iam_policy" "tfs_storage_admin_policy" {
+data "template_file" "storage_admim_policy_doc" {
+  template = "${file("${path.module}/policy-templates/tfs_storage_admin_policy.json")}"
+}
+
+resource "aws_iam_policy" "storage_admin_policy" {
   name        = "tfs_storage_admin_policy"
   path        = "/core/"
   description = "tfs_storage_admin_policy"
-  policy      = "${file("${path.module}/policy-templates/tfs_storage_admin_policy.json")}"
+  policy      = "${data.template_file.storage_admim_policy_doc.rendered}"
 }
 
 resource "aws_iam_role_policy_attachment" "storage_admin1" {
   role       = "${aws_iam_role.storage_admin.id}"
-  policy_arn = "${aws_iam_policy.tfs_read_only.arn}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "storage_admin2" {
@@ -24,13 +28,13 @@ resource "aws_iam_role_policy_attachment" "storage_admin2" {
 
 resource "aws_iam_role_policy_attachment" "storage__admin3" {
   role       = "${aws_iam_role.storage_admin.id}"
-  policy_arn = "${aws_iam_policy.storage_admin.arn}"
+  policy_arn = "${aws_iam_policy.storage_admin_policy.arn}"
 }
 
 output "storage_admin_role_name" {
-  value = "${{aws_iam_role.storage_admin.id}"
+  value = "${aws_iam_role.storage_admin.id}"
 }
+
 output "storage_admin_role_arn" {
   value = "${aws_iam_role.storage_admin.arn}"
 }
-

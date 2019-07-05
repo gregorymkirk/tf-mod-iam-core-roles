@@ -5,16 +5,20 @@ resource "aws_iam_role" "monitoring_admin" {
   path                 = "/core/"
 }
 
-resource "aws_iam_policy" "tfs_monitoring_admin_policy" {
+data "template_file" "monitoring_admin_policy_doc" {
+  template = "${file("${path.module}/policy-templates/tfs_monitoring_admin_policy.json")}"
+}
+
+resource "aws_iam_policy" "monitoring_admin" {
   name        = "tfs_monitoring_admin_policy"
   path        = "/core/"
   description = "tfs_monitoring_admin_policy"
-  policy      = "${file("${path.module}/policy-templates/tfs_monitoring_admin_policy.json")}"
+  policy      = "${data.template_file.monitoring_admin_policy_doc.rendered}"
 }
 
 resource "aws_iam_role_policy_attachment" "monitoring_admin1" {
   role       = "${aws_iam_role.monitoring_admin.id}"
-  policy_arn = "${aws_iam_policy.tfs_read_only.arn}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "monitoring_admin2" {
@@ -27,10 +31,10 @@ resource "aws_iam_role_policy_attachment" "monitoring_admin3" {
   policy_arn = "${aws_iam_policy.monitoring_admin.arn}"
 }
 
-
 output "monitoring_admin_role_name" {
-  value = "${{aws_iam_role.monitoring_admin.id}"
+  value = "${aws_iam_role.monitoring_admin.id}"
 }
+
 output "monitoring_admin_role_arn" {
   value = "${aws_iam_role.monitoring_admin.arn}"
 }

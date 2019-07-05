@@ -5,16 +5,9 @@ resource "aws_iam_role" "infra_security_admin" {
   path                 = "/core/"
 }
 
-resource "aws_iam_policy" "tfs_infra_security_admin_policy" {
-  name        = "tfs_infra_security_admin_policy"
-  path        = "/core/"
-  description = "tfs_infra_security_admin_policy"
-  policy      = "${file("${path.module}/policy-templates/tfs_infra_security_admin_policy.json")}"
-}
-
 resource "aws_iam_role_policy_attachment" "infra_security_admin1" {
   role       = "${aws_iam_role.infra_security_admin.id}"
-  policy_arn = "${aws_iam_policy.tfs_read_only.arn}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "infra_security_admin2" {
@@ -22,9 +15,12 @@ resource "aws_iam_role_policy_attachment" "infra_security_admin2" {
   policy_arn = "arn:aws:iam::aws:policy/AWSSecurityHubReadOnlyAccess"
 }
 
+# Need to add the read only denies here
+
 output "infra_security_admin_role_name" {
-  value = "${{aws_iam_role.infra_security_admin.id}"
+  value = "${aws_iam_role.infra_security_admin.id}"
 }
+
 output "infra_security_admin_role_arn" {
   value = "${aws_iam_role.infra_security_admin.arn}"
 }

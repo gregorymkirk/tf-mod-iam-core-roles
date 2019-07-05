@@ -9,8 +9,15 @@ resource "aws_iam_role" "readonly" {
 # as it is used by multiple roles in additin to this one.
 resource "aws_iam_role_policy_attachment" "readonly" {
   role       = "${aws_iam_role.readonly.id}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "readonly1" {
+  role       = "${aws_iam_role.readonly.id}"
   policy_arn = "${aws_iam_policy.tfs_read_only.arn}"
 }
+
+#Attach Read Only denies here
 
 ### Outputs
 output "read_only_role_name" {

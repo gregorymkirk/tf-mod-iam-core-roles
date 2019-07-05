@@ -9,9 +9,11 @@ resource "aws_iam_role_policy_attachment" "srv-es-qualys-connector" {
   role       = "${aws_iam_role.srv-es-qualys-connector.id}"
   policy_arn = "arn:aws:iam::aws:policy/SecurityAudit"
 }
+
 output "srv_es_qualys_connector_role_name" {
-  value = "${{aws_iam_role.srv-es-qualys-connector.id}"
+  value = "${aws_iam_role.srv-es-qualys-connector.id}"
 }
+
 output "srv_es_qualys_connector_role_arn" {
   value = "${aws_iam_role.srv-es-qualys-connector.arn}"
 }

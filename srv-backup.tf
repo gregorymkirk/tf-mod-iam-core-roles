@@ -16,8 +16,9 @@ resource "aws_iam_role_policy_attachment" "srv-backup-role2" {
 }
 
 output "srv_backup_role_name" {
-  value = "${{aws_iam_role.srv-backup-role.id}"
+  value = "${aws_iam_role.srv-backup-role.id}"
 }
+
 output "srv_backup_role_arn" {
   value = "${aws_iam_role.compute_admin.arn}"
 }

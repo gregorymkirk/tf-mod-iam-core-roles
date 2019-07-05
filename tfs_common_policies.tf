@@ -23,13 +23,10 @@ data "template_file" "assume_admin_role_policy" {
   }
 }
 
-### Read only policy 
+## Read only limit policy 
 resource "aws_iam_policy" "tfs_read_only" {
-  name        = "tfs_read_only_access_policy"
+  name        = "tfs_read_only_access_limits_policy"
   path        = "/"
   description = "ec2_admin_policy"
-  policy      = "${file("${path.module}/policy-templates/tfs_read_only_access.json")}"
+  policy      = "${file("${path.module}/policy-templates/tfs_read_only_limits.json")}"
 }
-
-####Polcies not called by other scripts (yet)
-

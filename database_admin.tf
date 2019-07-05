@@ -5,32 +5,36 @@ resource "aws_iam_role" "database_admin" {
   path                 = "/core/"
 }
 
-resource "aws_iam_policy" "tfs_database_admin_policy" {
+data "template_file" "database_policy_doc" {
+  template = "${file("${path.module}/policy-templates/tfs_database_admin_policy.json")}"
+}
+
+resource "aws_iam_policy" "database_admin" {
   name        = "tfs_database_admin_policy"
   path        = "/core/"
   description = "tfs_database_admin_policy"
-  policy      = "${file("${path.module}/policy-templates/tfs_database_admin_policy.json")}"
+  policy      = "${data.template_file.database_policy_doc.rendered}"
 }
 
-resource "aws_iam_role_policy_attachment" "compute_admin1" {
-  role       = "${aws_iam_role.tfsawssubprod_compute_readonly.id}"
-  policy_arn = "${aws_iam_policy.tfs_read_only.arn}"
+resource "aws_iam_role_policy_attachment" "database_admin1" {
+  role       = "${aws_iam_role.database_admin.id}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "compute_admin2" {
-  role       = "${aws_iam_role.tfsawssubprod_compute_readonly.id}"
+resource "aws_iam_role_policy_attachment" "database_admin2" {
+  role       = "${aws_iam_role.database_admin.id}"
   policy_arn = "arn:aws:iam::aws:policy/job-function/SupportUser"
 }
 
-resource "aws_iam_role_policy_attachment" "compute_admin3" {
-  role       = "${aws_iam_role.tfsawssubprod_compute_readonly.id}"
+resource "aws_iam_role_policy_attachment" "database_admin3" {
+  role       = "${aws_iam_role.database_admin.id}"
   policy_arn = "${aws_iam_policy.database_admin.arn}"
 }
 
-
 output "database_admin_role_name" {
-  value = "${{aws_iam_role.database_admin.id}"
+  value = "${aws_iam_role.database_admin.id}"
 }
+
 output "database_admin_role_arn" {
   value = "${aws_iam_role.database_admin.arn}"
 }

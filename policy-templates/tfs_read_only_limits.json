@@ -1,0 +1,20 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Action": [
+                "lambda:GetFunction",
+                "athena:GetQueryResults",
+                "s3:getObject",
+                "s3:GetObjectTorrent",
+                "sdb:GetAttributes",
+                "dynamodb:BatchGet*",
+                "dynamodb:Get*",
+                "dynamodb:Query",
+                "dynamodb:Scan"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
