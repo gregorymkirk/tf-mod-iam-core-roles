@@ -13,7 +13,7 @@
         "iam:DeletePolicyVersion",
         "iam:CreatePolicyVersion"
       ],
-      "Resource": "arn:aws:iam::${acct_num}:policy/core/*"
+      "Resource": "arn:aws:iam::${local_acct_num}:policy/core/*"
     },
     {
       "Effect": "Deny",
