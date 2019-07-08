@@ -1,13 +1,12 @@
 #Render the boudnary Policy from the template
 data "template_file" "boundary_policy_doc" {
-  template = "${file("${path.module}/policy-templates/tfs_boundary_policy.json")}"
+  template = "${file("${path.module}/policy-templates/tfs_boundary_policy.json.tpl")}"
 
   vars = {
-    acct_num = "${data.aws_caller_identity.current.account_id}"
+    local_acct_num = "${data.aws_caller_identity.current.account_id}"
   }
 }
 
-#Create the boundary policy IAM object
 resource "aws_iam_policy" "boundary_policy" {
   name        = "tfs_boundary"
   path        = "/core/"
@@ -15,11 +14,13 @@ resource "aws_iam_policy" "boundary_policy" {
   policy      = "${data.template_file.boundary_policy_doc.rendered}"
 }
 
+### Assume rolt policy
+
 data "template_file" "assume_admin_role_policy" {
-  template = "${file("${path.module}/policy-templates/assume_admin_role_policy.json")}"
+  template = "${file("${path.module}/policy-templates/assume_admin_role_policy.json.tpl")}"
 
   vars = {
-    acct_num = "${var.master_account}"
+    mgmt_acct_num = "${var.management_account}"
   }
 }
 
